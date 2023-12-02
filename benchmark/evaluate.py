@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession, Row
 from pyspark.ml.recommendation import ALSModel
 from pyspark.sql.functions import col, lower,lit
+from pyspark.ml.evaluation import RegressionEvaluator
 
 def get_movie_id(movies_df, movie_title):
     """
@@ -59,6 +60,23 @@ def main():
     for movie_id in recommended_movie_ids:
         movie_title = movies_df.filter(movies_df.movie_id == movie_id).first().movie_title
         print(movie_title)
+
+    # Load the test data
+    test = spark.read.csv('data/u1.test', header=True, inferSchema=True)
+
+    # Make predictions on the test data
+    predictions = model.transform(test)
+    
+    # Evaluate the model using Root-mean-square error
+    evaluator = RegressionEvaluator(metricName="rmse", labelCol="rating", predictionCol="prediction")
+    rmse = evaluator.evaluate(predictions)
+    print(f"Root-mean-square error = {rmse}")
+
+    # Evaluate the model using Mean-square error
+    mse_evaluator = RegressionEvaluator(metricName="mse", labelCol="rating", predictionCol="prediction")
+    mse = mse_evaluator.evaluate(predictions)
+    print(f"Mean Squared Error (MSE) = {mse}")
+
 
     # Stop Spark session
     spark.stop()
