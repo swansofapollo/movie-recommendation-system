@@ -1,0 +1,4 @@
+A Recommendation Engine for Predicting Movie Ratings Using a Big Data Approach
+ -  https://www.researchgate.net/publication/351736605_A_Recommendation_Engine_for_Predicting_Movie_Ratings_Using_a_Big_Data_Approach
+
+Big Data Analytics of Movie Rating Predictive System - https://www.researchgate.net/publication/342921976_Big_Data_Analytics_of_Movie_Rating_Predictive_System
